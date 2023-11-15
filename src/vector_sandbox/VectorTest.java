@@ -10,7 +10,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
 @Measurement(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)
 @Warmup(iterations = 3, time = 100, timeUnit = TimeUnit.MILLISECONDS)
 @State(Scope.Benchmark)
@@ -20,7 +20,7 @@ public class VectorTest {
     int[] arr1;
     int[] arr2;
 
-    @Param("10000000")
+    @Param({"100", "1000", "10000", "100000", "1000000"})
     int size;
     static public int addTwoScalarArrays(int[] arr1, int[] arr2) {
         int[] result = new int[arr1.length];
@@ -97,7 +97,7 @@ public class VectorTest {
     }
 
     @Benchmark
-    public void measureAddArrays(org.openjdk.jmh.infra.Blackhole bh) {
+    public void measureAddArrays(Blackhole bh) {
         bh.consume(addTwoScalarArrays(arr1, arr2));
     }
 
